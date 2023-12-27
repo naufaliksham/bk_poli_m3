@@ -7,13 +7,8 @@ use Illuminate\Http\Request;
 
 class ObatController extends Controller
 {
-    public function index()
-    {
-        $obats = Obat::all();
-        return view('obat2.index', compact('obats'));
-    }
 
-    public function index2()
+    public function index()
     {
         $obats = Obat::all();
         return view('obat.index', compact('obats'));
@@ -21,7 +16,7 @@ class ObatController extends Controller
 
     public function create()
     {
-        return view('obat2.create');
+        return view('obat.create');
     }
 
     public function store(Request $request)
@@ -40,12 +35,12 @@ class ObatController extends Controller
 
     public function show(Obat $obat)
     {
-        return view('obat2.show', compact('obat'));
+        return view('obat.show', compact('obat'));
     }
 
     public function edit(Obat $obat)
     {
-        return view('obat2.edit', compact('obat'));
+        return view('obat.edit', compact('obat'));
     }
 
     public function update(Request $request, Obat $obat)

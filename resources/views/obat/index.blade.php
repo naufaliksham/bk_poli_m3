@@ -45,66 +45,77 @@
         {{-- Table --}}
         <div class="flex flex-wrap my-6 -mx-3">
           
-          <!-- Daftar Obat -->
-          <div class="w-full max-w-full px-3 mt-0 mb-6">
-            <div class="border-black/12.5 shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-              <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
-                <div class="flex flex-wrap mt-0 -mx-3">
-                  <div class="flex-none w-7/12 max-w-full px-3 mt-0 lg:w-1/2 lg:flex-none">
-                    <h6>Daftar Obat</h6>
+          @if (Auth::user()->role->nama == 'admin')
+            <!-- Daftar Obat -->
+            <div class="w-full max-w-full px-3 mt-0 mb-6">
+              <div class="border-black/12.5 shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
+                <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
+                  <div class="flex flex-wrap mt-0 -mx-3">
+                    <div class="flex-none w-7/12 max-w-full px-3 mt-0 lg:w-1/2 lg:flex-none">
+                      <h6>Daftar Obat</h6>
+                    </div>
+                    <div class="flex-none w-5/12 max-w-full px-3 mt-0 text-right lg:w-1/2 lg:flex-none">
+                      <a href="{{ route('obat.create') }}" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Tambah Obat</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-auto p-6 px-0 pb-2">
+                  <div class="overflow-x-auto">
+                    <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                      <thead class="align-bottom">
+                        <tr>
+                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">No.</th>
+                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Nama Obat</th>
+                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Kemasan</th>
+                          <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Harga</th>
+                          <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($obats as $key => $obat)
+                          <tr>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                              <div class="flex px-2 py-1">
+                                <div class="flex flex-col justify-center">
+                                  <h6 class="px-6 py-3 font-bold text-center">{{ $key + 1 }}</h6>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                              <div class="flex px-2 py-1">
+                                <div class="flex flex-col justify-center">
+                                  <center><h6 class="mb-0 text-sm leading-normal">{{ $obat->nama_obat }}</h6></center>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $obat->kemasan }}</td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap"><center>{{ $obat->harga }}</center></td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                              <div class="flex justify-center items-center">
+                                <a href="{{ route('obat.show', $obat->id) }}" class="btn btn-info mr-2 py-1 px-4" style="color:#ee0589">Lihat</a>
+                                <a href="{{ route('obat.edit', $obat->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Edit</a>
+                                <form action="{{ route('obat.destroy', $obat->id) }}" method="POST" style="display: inline;">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn btn-danger py-1 px-4" style="color:#7928ca" onclick="return confirm('Apakah Anda yakin ingin menghapus obat ini?')">Hapus</button>
+                                </form>
+                              </div>
+                            </td>                          
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-              <div class="flex-auto p-6 px-0 pb-2">
-                <div class="overflow-x-auto">
-                  <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
-                    <thead class="align-bottom">
-                      <tr>
-                        <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">No.</th>
-                        <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Nama Obat</th>
-                        <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Kemasan</th>
-                        <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Harga</th>
-                        <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($obats as $key => $obat)
-                        <tr>
-                          <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
-                            <div class="flex px-2 py-1">
-                              <div class="flex flex-col justify-center">
-                                <h6 class="px-6 py-3 font-bold text-center">{{ $key + 1 }}</h6>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
-                            <div class="flex px-2 py-1">
-                              <div class="flex flex-col justify-center">
-                                <center><h6 class="mb-0 text-sm leading-normal">{{ $obat->nama_obat }}</h6></center>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $obat->kemasan }}</td>
-                          <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap"><center>{{ $obat->harga }}</center></td>
-                          <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
-                            <div class="flex justify-center items-center">
-                              <a href="{{ route('obat.show', $obat->id) }}" class="btn btn-info mr-2 py-1 px-4" style="color:#ee0589">Lihat</a>
-                              <a href="{{ route('obat.edit', $obat->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Edit</a>
-                              <form action="{{ route('obat.destroy', $obat->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger py-1 px-4" style="color:#7928ca" onclick="return confirm('Apakah Anda yakin ingin menghapus obat ini?')">Hapus</button>
-                              </form>
-                            </div>
-                          </td>                          
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              </div>
             </div>
-          </div>
+          @endif
+
+          @if (Auth::user()->role->nama == 'dokter')
+            Ini Halaman dokter
+          @endif
+
+
         </div>
   
         <footer class="pt-4">

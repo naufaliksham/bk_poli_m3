@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\dokterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObatController;
 
@@ -35,7 +36,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Menampilkan daftar obat
-Route::get('/obat', [ObatController::class, 'index2'])->name('obat.index');
+Route::get('/obat', [ObatController::class, 'index'])->name('obat.index');
 
 // Menampilkan formulir untuk membuat obat baru
 Route::get('/obat/create', [ObatController::class, 'create'])->name('obat.create');
@@ -54,3 +55,13 @@ Route::put('/obat/{obat}', [ObatController::class, 'update'])->name('obat.update
 
 // Menghapus obat dari database
 Route::delete('/obat/{obat}', [ObatController::class, 'destroy'])->name('obat.destroy');
+
+// Menampilkan periksa
+Route::get('/periksa', [dokterController::class, 'index'])->name('periksa.index');
+Route::get('/riwayat_pasien', [dokterController::class, 'index2'])->name('riwayat_pasien.index');
+
+
+// Menampilkan riwayat pasien
+// Route::get('/riwayat_pasien', function () {
+//     return view('riwayat_pasien.index')->name('riwayat_pasien.index');
+// });

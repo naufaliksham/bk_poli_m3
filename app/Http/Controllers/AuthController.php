@@ -25,8 +25,10 @@ class AuthController extends Controller
             if (Auth::user()->role->nama == "admin") {
                 return redirect('obat');
             }
+            if (Auth::user()->role->nama == "dokter") {
+                return redirect('periksa');
+            }
         }
-
         // Jika autentikasi gagal
         return back()->withErrors(['email' => 'Gagal masuk!']);
     }
