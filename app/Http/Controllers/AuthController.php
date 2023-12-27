@@ -22,7 +22,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Jika autentikasi berhasil
-            return redirect('/dashboard');
+            if (Auth::user()->role->nama == "admin") {
+                return redirect('obat');
+            }
         }
 
         // Jika autentikasi gagal
