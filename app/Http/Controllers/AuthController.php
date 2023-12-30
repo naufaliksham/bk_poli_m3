@@ -22,10 +22,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Jika autentikasi berhasil
-            if (Auth::user()->role->nama == "admin") {
+            $user = Auth::user();
+            $userRole = $user->role->nama;
+            
+            if ($userRole == "admin") {
                 return redirect('obat');
             }
-            if (Auth::user()->role->nama == "dokter") {
+            if ($userRole == "dokter") {
                 return redirect('periksa');
             }
         }

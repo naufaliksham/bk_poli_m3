@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
   @extends('layout.head')

@@ -8,6 +8,7 @@ class dokterController extends Controller
 {
     public function index()
     {
+        // $obats = Obat::all();
         return view('periksa.index');
     }
     public function index2()
