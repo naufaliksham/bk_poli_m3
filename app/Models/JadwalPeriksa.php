@@ -5,19 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Obat extends Model
+class JadwalPeriksa extends Model
 {
     use HasFactory;
 
-    protected $table = "obat";
+    protected $table = "jadwal_periksa";
     protected $primaryKey = 'id';
 
-
     protected $fillable = [
-        'nama_obat',
-        'kemasan',
-        'harga',
+        'id',
+        'id_dokter',
+        'hari',
+        'jam_mulai',
+        'jam_selesai',
     ];
+
+    public function dokter()
+    {
+        return $this->belongsTo(Dokter::class, 'id_dokter');
+    }
 
     public $timestamps = false; // Nonaktifkan timestamp
 }

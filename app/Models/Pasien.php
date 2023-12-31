@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Obat extends Model
+class Pasien extends Model
 {
     use HasFactory;
-
-    protected $table = "obat";
+    protected $table = "pasien";
     protected $primaryKey = 'id';
 
-
     protected $fillable = [
-        'nama_obat',
-        'kemasan',
-        'harga',
+        'nama',
+        'alamat',
+        'no_ktp',
+        'no_hp',
+        'no_rm',
     ];
 
     public $timestamps = false; // Nonaktifkan timestamp

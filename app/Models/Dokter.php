@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Dokter extends Model
 {
     use HasFactory;
+    protected $table = "dokter";
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nama',
@@ -20,4 +22,6 @@ class Dokter extends Model
     {
         return $this->belongsTo(Poli::class, 'id_poli');
     }
+    
+    public $timestamps = false; // Nonaktifkan timestamp
 }

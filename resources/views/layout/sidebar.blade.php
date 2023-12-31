@@ -3,83 +3,94 @@
     <div class="h-19.5">
       <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden" sidenav-close></i>
       <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="">
-        <img src="./assets/img/logo-ct.png" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
-        <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand" style="text-transform: uppercase;">{{Auth::user()->role->nama}}</span>
+        <img src="{{asset('./assets/img/logo-ct.png')}}" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
+        <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand" style="text-transform: uppercase;">{{Auth::user()->nama}}</span>
       </a>
     </div>
-
+    
     <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
 
     <div class="items-center block w-auto max-h-screen overflow-auto grow basis-full">
       <ul class="flex flex-col pl-0 mb-0">
-
-        @if (Auth::user()->role->nama == 'admin')
+          @if (Auth::user()->role->nama_role == 'admin')
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('obat.index')}}">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('admin-dashboard')}}">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                      <g transform="translate(1716.000000, 291.000000)">
-                        <g transform="translate(153.000000, 2.000000)">
-                          <path class="fill-slate-800 opacity-60" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
-                          <path class="fill-slate-800" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('admin-dokter')}}">
+              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dokter</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('admin-pasien')}}">
+              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Pasien</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('admin-poli')}}">
+              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Poliklinik</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('admin-obat')}}">
+              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Obat</span>
             </a>
           </li>
-
-        @elseif (Auth::user()->role->nama == 'dokter')
+          @elseif (Auth::user()->role->nama_role == 'pasien')
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('periksa.index')}}">
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('pasien-dashboard')}}">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                      <g transform="translate(1716.000000, 291.000000)">
-                        <g transform="translate(153.000000, 2.000000)">
-                          <path class="fill-slate-800 opacity-60" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
-                          <path class="fill-slate-800" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Periksa</span>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
             </a>
           </li>
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('riwayat_pasien.index')}}">
-              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-                <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                      <g transform="translate(1716.000000, 291.000000)">
-                        <g transform="translate(453.000000, 454.000000)">
-                          <path class="fill-slate-800 opacity-60" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
-                          <path class="fill-slate-800" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
+            <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('pasien-poliklinik')}}">
+              <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 14H19M12 6L19 14L12 22" stroke="#1A202C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Riwayat Pasien</span>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Poliklinik</span>
             </a>
           </li>
-        @endif
+          @endif
 
         <li class="w-full mt-4">
           <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60">Halaman Akun</h6>
         </li>
         <li class="mt-0.5 w-full">
-          <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="">
+          <a class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="">
             <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -103,7 +114,7 @@
         <li class="mt-0.5 w-full">
           <form method="POST" action="{{ url('logout') }}">
             @csrf
-            <button type="submit" class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors">
+            <button type="submit" class="hover:shadow-soft-2xl rounded py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors">
             <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>

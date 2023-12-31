@@ -21,17 +21,23 @@
                   <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
                     <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Silahkan Masuk</h3>
                     <p class="mb-0">Masukan email dan password untuk masuk</p>
+                    
+                    @if($errors->any())
+                      <div>
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li style="color: red">{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
+                    @if(session('success'))
+                      <div>
+                        <p style="color: blue">{{ session('success') }}</p>
+                      </div>
+                    @endif
+
                   </div>
-                  
-    @if($errors->any())
-    <div>
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
                   <div class="flex-auto p-6">
                     <form method="POST" action="{{ url('/login') }}" role="form">
                       @csrf
