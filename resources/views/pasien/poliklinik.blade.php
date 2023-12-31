@@ -55,7 +55,13 @@
                           {{-- @foreach ($daftarPolis as $dp)
                                 <p>{{ $dp->no_antrian }}</p>
                           @endforeach --}}
-                        <b class="w-full p-2 border rounded-md" style="padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">Nomor antrian terbaru anda : <b style="color: black">{{$daftarPolis->no_antrian}}</b></b>
+                        <b class="w-full p-2 border rounded-md" style="padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">Nomor antrian terbaru anda : <b style="color: black">
+                          @if($daftarPolis != null)
+                              @if($daftarPolis->no_antrian != null)
+                                  {{$daftarPolis->no_antrian}}
+                              @endif
+                          @endif
+                        </b></b>
                     </div>
                     <div class="mb-4">
                         <label for="jadwal_periksa" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Pilih Poliklinik:</label>

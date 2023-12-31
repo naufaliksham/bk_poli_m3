@@ -1,4 +1,4 @@
-1. gunakan terlebih dahulu database pada yang sudah tertera
+1. gunakan database yang ada diluar laravel bernama bk_poliklinik.sql (tidak memakai migrasi)
 2. install composer dan 'composer update' terminal
 3. .env sambungkan ke database
 4. buat database di phpmyadmin karena migrasi di laravel tidak ada

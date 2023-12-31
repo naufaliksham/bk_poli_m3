@@ -94,7 +94,6 @@
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap"><center>{{ $obat->harga }}</center></td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                               <div class="flex justify-center items-center">
-                                <a href="{{ route('obat.show', $obat->id) }}" class="btn btn-info mr-2 py-1 px-4" style="color:#ee0589">Lihat</a>
                                 <a href="{{ route('admin-editObat', $obat->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Edit</a>
                                 <form action="{{ route('admin-destroyObat', $obat->id) }}" method="POST" style="display: inline;">
                                   @csrf
