@@ -19,46 +19,45 @@ class PasienController extends Controller
     }
 
     public function poliklinik()
-{
-    // Ambil semua jadwal periksa
-    $jadwalPeriksas = JadwalPeriksa::all();
+    {
+        // Ambil semua jadwal periksa
+        $jadwalPeriksas = JadwalPeriksa::all()->sortBy('hari')->sortBy('jam_mulai');
 
-    // Inisialisasi array untuk menyimpan nomor urut
-    $urutanPerId = [];
+        // Inisialisasi array untuk menyimpan nomor urut
+        $urutanPerId = [];
 
-    // Iterasi setiap jadwal periksa
-    foreach ($jadwalPeriksas as $jadwalPeriksa) {
-        // Ambil ID JadwalPeriksa
-        $idJadwalPeriksa = $jadwalPeriksa->id;
+        // Iterasi setiap jadwal periksa
+        foreach ($jadwalPeriksas as $jadwalPeriksa) {
+            // Ambil ID JadwalPeriksa
+            $idJadwalPeriksa = $jadwalPeriksa->id;
 
-        // Jika ID belum ada dalam array, tambahkan dan set urutan ke 1
-        if (!isset($urutanPerId[$idJadwalPeriksa])) {
-            $urutanPerId[$idJadwalPeriksa] = 1;
-        } else {
-            // Jika ID sudah ada dalam array, tambahkan urutan
-            $urutanPerId[$idJadwalPeriksa]++;
+            // Jika ID belum ada dalam array, tambahkan dan set urutan ke 1
+            if (!isset($urutanPerId[$idJadwalPeriksa])) {
+                $urutanPerId[$idJadwalPeriksa] = 1;
+            } else {
+                // Jika ID sudah ada dalam array, tambahkan urutan
+                $urutanPerId[$idJadwalPeriksa]++;
+            }
+
+            // Set nomor urut ke model JadwalPeriksa
+            $jadwalPeriksa->nomor_urut = $urutanPerId[$idJadwalPeriksa];
         }
+        $jadwalPeriksas = $jadwalPeriksas->sortByDesc('hari');
 
-        // Set nomor urut ke model JadwalPeriksa
-        $jadwalPeriksa->nomor_urut = $urutanPerId[$idJadwalPeriksa];
+        $namaPasien = Auth::user()->nama;
+        $pasien = Pasien::where('nama', $namaPasien)->first();
+
+        if ($pasien) {
+            // Ambil data DaftarPoli berdasarkan id_pasien
+            $daftarPolis = DaftarPoli::where('id_pasien', $pasien->id)->orderBy('no_antrian', 'desc')->first();
+            // dd($daftarPolis);
+            // Kirim data ke view
+            return view('pasien.poliklinik', compact('jadwalPeriksas', 'daftarPolis'));
+        } else {
+            // Handle jika pasien tidak ditemukan
+            return redirect()->back()->with('error', 'Antrian tidak ditemukan.');
+        }
     }
-    $jadwalPeriksas = $jadwalPeriksas->sortByDesc('hari');
-
-    $namaPasien = Auth::user()->nama;
-    $pasien = Pasien::where('nama', $namaPasien)->first();
-
-    if ($pasien) {
-        // Ambil data DaftarPoli berdasarkan id_pasien
-        $daftarPolis = DaftarPoli::where('id_pasien', $pasien->id)->orderBy('no_antrian', 'desc')->first();
-        // dd($daftarPolis);
-        // Kirim data ke view
-        return view('pasien.poliklinik', compact('jadwalPeriksas', 'daftarPolis'));
-    } else {
-        // Handle jika pasien tidak ditemukan
-        return redirect()->back()->with('error', 'Antrian tidak ditemukan.');
-    }
-}
-
 
     public function addDaftarPoli(Request $request)
     {
@@ -78,12 +77,14 @@ class PasienController extends Controller
         if ($pasien) {
             $id_pasien = $pasien->id;
     
-            // Masukkan data ke database menggunakan model DaftarPoli
+            $tanggalAntrian = now()->format('Ymd');
+            $noAntrian = $tanggalAntrian . ($countEntries + 1);
+
             DaftarPoli::create([
                 'id_pasien' => $id_pasien,
                 'id_jadwal' => $validatedData['jadwal_periksa'],
                 'keluhan' => $validatedData['keluhan'],
-                'no_antrian' => $countEntries + 1,
+                'no_antrian' => $noAntrian,
             ]);
     
             // Redirect atau lakukan apa pun yang Anda inginkan setelah membuat catatan

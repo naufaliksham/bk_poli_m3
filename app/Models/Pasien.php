@@ -19,5 +19,14 @@ class Pasien extends Model
         'no_rm',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($pasien) {
+            $pasien->no_rm = 'RM' . date('YmdHis');
+        });
+    }
+
     public $timestamps = false; // Nonaktifkan timestamp
 }

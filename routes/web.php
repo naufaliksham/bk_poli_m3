@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\dokterController;
+use App\Http\Controllers\DokterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PasienController;
@@ -80,3 +80,14 @@ Route::get('/pasien/pilihpoli', [PasienController::class, 'pilihpoli'])->name('p
 Route::post('/pasien/politerpilih', [PasienController::class, 'politerpilih'])->name('pasien-politerpilih');
 Route::post('/pasien/pilihjadwal', [PasienController::class, 'pilihjadwal'])->name('pasien-pilihjadwal');
 Route::post('/submit-daftar-poli', [PasienController::class, 'submitDaftarPoli'])->name('submit-daftar-poli');
+
+// ~~ Dokter ~~
+// dashboard
+Route::get('/dokter', [DokterController::class, 'dashboard'])->name('dokter-dashboard');
+Route::get('/dokter/jadwal-periksa', [DokterController::class, 'jadwalPeriksa'])->name('dokter-jadwal-periksa');
+Route::get('/dokter/tambah-jadwal-periksa', [DokterController::class, 'tambahJadwalPeriksa'])->name('dokter-tambah-jadwal-periksa');
+Route::post('/dokter/create-jadwal-periksa', [DokterController::class, 'createJadwalPeriksa'])->name('dokter-create-jadwal-periksa');
+Route::get('/dokter/edit-jadwal-periksa/{id}', [DokterController::class, 'editJadwalPeriksa'])->name('dokter-edit-jadwal-periksa');
+Route::put('/dokter/update-jadwal-periksa/{id}', [DokterController::class, 'updateJadwalPeriksa'])->name('dokter-update-jadwal-periksa');
+Route::delete('/dokter/destroy-jadwal-periksa/{id}', [DokterController::class, 'destroyJadwalPeriksa'])->name('dokter-destroy-jadwal-periksa');
+

@@ -14,7 +14,7 @@
       <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start" navbar-main navbar-scroll="true">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
           <nav>
-            <h3 class="mb-0 font-bold capitalize">Halaman Pasien</h3>
+            <h3 class="mb-0 font-bold capitalize">Halaman Dokter</h3>
           </nav>
   
           <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
@@ -42,8 +42,8 @@
                     <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
                         <div class="flex flex-wrap mt-0 -mx-3">
                             <div class="flex-none w-7/12 max-w-full px-3 mt-0 lg:w-1/2 lg:flex-none">
-                                <h4 class="text-xl font-semibold mb-4">Ini adalah dashboard Pasien</h4>
-                                <h6 class="text-sm text-gray-500 mb-4">Disini pasien bisa melakukan :</h6>
+                                <h4 class="text-xl font-semibold mb-4">Ini adalah dashboard Dokter</h4>
+                                <h6 class="text-sm text-gray-500 mb-4">Disini dokter bisa melakukan :</h6>
                             </div>
                         </div>
                         <!-- List of Actions -->

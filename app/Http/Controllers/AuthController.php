@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use App\Models\Pasien;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class AuthController extends Controller
                 return redirect('admin')->with('success', 'Berhasil masuk!');
             }
             if ($userRole == 'dokter') {
-                return "Halo dokter!";
+                return redirect('dokter')->with('success', 'Berhasil masuk!');
             }
             if ($userRole == 'pasien') {
                 return redirect('pasien')->with('success', 'Berhasil masuk!');
@@ -53,21 +54,71 @@ class AuthController extends Controller
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'no_ktp' => 'required|string|min:12',
             'role' => 'required',
         ]);
-    
-        // Validasi Nama dan KTP Pasien
-        $pasien = Pasien::where('no_ktp', $request->no_ktp)
-                        ->where('nama', $request->nama)
-                        ->first();
 
-        // Validasi Email dan Nama pada tabel users
-        $existingUser = User::where('email', $request->email)
+        // Jika role dokter
+        if ($request->input('role') == 3) {
+            $request->validate([
+                'no_hp' => 'required|numeric',
+            ]);
+
+            // Validasi Nama dan Nomor HP Dokter
+            $dokter = Dokter::where('no_hp', $request->no_hp)
+                            ->where('nama', $request->nama)
+                            ->first();
+
+            // Validasi Email dan Nama pada tabel users
+            $existingUser = User::where('email', $request->email)
+                                ->where('nama', $request->nama)
+                                ->first();
+
+            if ($dokter && !$existingUser) {
+                // Membuat user baru
+                $user = User::create([
+                    'nama' => $request->input('nama'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'idRole' => $request->input('role'),
+                ]);
+
+                // Redirect ke halaman setelah registrasi
+                return redirect('/formlogin')->with('success', 'Berhasil mendaftar, silakan coba login!');
+            }
+        }
+    
+        // Jika role pasien
+        if ($request->input('role') == 2) {
+            $request->validate([
+                'no_ktp' => 'required|string|min:12',
+            ]);
+    
+            // Validasi Nama dan KTP Pasien
+            $pasien = Pasien::where('no_ktp', $request->no_ktp)
+                            ->where('nama', $request->nama)
                             ->first();
     
-        if ($pasien && !$existingUser) {
-            // Membuat user baru
+            // Validasi Email dan Nama pada tabel users
+            $existingUser = User::where('email', $request->email)
+                                ->where('nama', $request->nama)
+                                ->first();
+    
+            if ($pasien && !$existingUser) {
+                // Membuat user baru
+                $user = User::create([
+                    'nama' => $request->input('nama'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'idRole' => $request->input('role'),
+                ]);
+    
+                // Redirect ke halaman setelah registrasi
+                return redirect('/formlogin')->with('success', 'Berhasil mendaftar, silakan coba login!');
+            }
+        } 
+
+        // Jika role admin
+        if ($request->input('role') == 1) {
             $user = User::create([
                 'nama' => $request->input('nama'),
                 'email' => $request->input('email'),
@@ -77,12 +128,10 @@ class AuthController extends Controller
     
             // Redirect ke halaman setelah registrasi
             return redirect('/formlogin')->with('success', 'Berhasil mendaftar, silakan coba login!');
-        } else {
-            return back()->withErrors(['no_ktp' => 'Gagal mendaftar, silahkan hubungi admin!']);
         }
-    }
     
-
+        return back()->withErrors(['no_ktp' => 'Gagal mendaftar, silahkan hubungi admin!']);
+    }    
 
     public function logout()
     {

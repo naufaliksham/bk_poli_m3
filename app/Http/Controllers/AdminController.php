@@ -71,7 +71,7 @@ class AdminController extends Controller
             return redirect()->route('admin-dokter')
             ->with('success', 'Dokter '.$dokter->nama.' sudah dihapus sebelumnya!');
         }
-
+        
         $dokter->delete();
 
         return redirect()->route('admin-dokter')

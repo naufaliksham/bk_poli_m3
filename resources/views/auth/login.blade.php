@@ -24,11 +24,9 @@
                     
                     @if($errors->any())
                       <div>
-                        <ul>
-                          @foreach($errors->all() as $error)
-                            <li style="color: red">{{ $error }}</li>
-                          @endforeach
-                        </ul>
+                        @foreach($errors->all() as $error)
+                          <p style="color: red">{{ $error }}</p>
+                        @endforeach
                       </div>
                     @endif
                     @if(session('success'))

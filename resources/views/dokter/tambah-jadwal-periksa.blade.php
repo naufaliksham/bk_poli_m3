@@ -39,58 +39,80 @@
       
           <!-- cards -->
           <div class="w-full px-6 py-6 mx-auto">
-      
+            
             {{-- Table --}}
             <div class="w-full max-w-full px-3 mt-0 mb-6">
                 <div class="border-black/12.5 shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
                   <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0 mb-4">
-                    <h6><center>Ambil Jadwal Periksa</center></h6>
+                    <h6><center>Tambah Jadwal Periksa</center></h6>
                   </div>
-
-                  <form action="{{ route('pasien-addDaftarPoli') }}" method="POST" class="bg-white p-8 rounded-lg shadow-md">
+                  <center>
+                    @if($errors->any())
+                      <div>
+                        @foreach($errors->all() as $error)
+                          <p style="color: red">{{ $error }}</p>
+                        @endforeach
+                      </div>
+                    @endif
+                    @if(session('success'))
+                      <div>
+                        <p style="color: blue">{{ session('success') }}</p>
+                      </div>
+                    @endif
+                  </center>
+                  <form action="{{ route('dokter-create-jadwal-periksa') }}" method="POST" class="bg-white p-8 rounded-lg shadow-md">
                     @csrf
                     <div class="mb-4">
-                        <label for="nama" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">No. Rekam Medis:</label>
-                          <h4></h4>
-                          {{-- @foreach ($daftarPolis as $dp)
-                                <p>{{ $dp->no_antrian }}</p>
-                          @endforeach --}}
-                        <b class="w-full p-2 border rounded-md" style="padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">Nomor antrian terbaru anda : <b style="color: black">
-                          @if($daftarPolis != null)
-                              @if($daftarPolis->no_antrian != null)
-                                  {{$daftarPolis->no_antrian}}
-                              @endif
-                          @else
-                          Belum dapat nomor antrian
-                          @endif
-                        </b></b>
+                        <label for="hari" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Hari:</label>
+                        <select name="hari" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
+                          <option value="" disabled selected>Pilih Hari</option>
+                          <option value="senin">Senin</option>
+                          <option value="selasa">Selasa</option>
+                          <option value="rabu">Rabu</option>
+                          <option value="kamis">Kamis</option>
+                          <option value="jumat">Jumat</option>
+                          <option value="sabtu">Sabtu</option>
+                        </select>                     
                     </div>
                     <div class="mb-4">
-                        <label for="jadwal_periksa" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Pilih jadwal, dokter, dan tempat untuk daftar periksa:</label>
-                        <select name="jadwal_periksa" id="jadwal_periksa" class="p-2 border rounded-md" style="padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
-                          <option value="" disabled selected>Hari, jam | Dokter | Tempat</option>
-                          @foreach($jadwalPeriksas as $jp)
-                              <option value="{{ $jp->id }}">{{ $jp->hari }}, {{$jp->jam_mulai}}-{{$jp->jam_selesai}} | {{$jp->dokter->nama}} | {{$jp->dokter->poli->nama_poli}}</option>
-                          @endforeach
-                        </select>                      
-                    </div>
-                    {{-- <div class="mb-4">
-                        <label for="id_jadwal" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Pilih Jadwal:</label>
-                        <select name="id_jadwal" id="id_jadwal" class="p-2 border rounded-md" style="padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
-                          @foreach($jadwalPeriksas as $jp)
-                            <option>{{ $jp->hari }}, {{$jp->jam_mulai}} - {{$jp->jam_selesai}}</option>
-                          @endforeach
-                        </select> 
-                    </div> --}}
-                    <div class="mb-4">
-                        <label for="keluhan" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Keluhan:</label>
-                        <textarea name="keluhan" id="keluhan" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;"></textarea>
-                    </div>
-                    <div class="mb-4 flex justify-center">
-                        <button type="submit" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Ambil Antrian</button>
-                    </div>
-                  </form>
-                
+                      <label for="jam_mulai" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Jam Mulai:</label>
+                      <select name="jam_mulai" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
+                          {{-- Loop untuk opsi jam mulai --}}
+                          @for ($i = 0; $i < 24; $i++)
+                              @for ($j = 0; $j < 60; $j += 15)
+                                  {{-- Format jam --}}
+                                  @php
+                                      $formattedHour = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                      $formattedMinute = str_pad($j, 2, '0', STR_PAD_LEFT);
+                                      $formattedTime = $formattedHour . ':' . $formattedMinute;
+                                  @endphp
+                                  <option value="{{ $formattedTime }}">{{ $formattedTime }}</option>
+                              @endfor
+                          @endfor
+                      </select>
+                  </div>
+                  
+                  <div class="mb-4">
+                      <label for="jam_selesai" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Jam Selesai:</label>
+                      <select name="jam_selesai" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
+                          {{-- Loop untuk opsi jam selesai --}}
+                          @for ($i = 0; $i < 24; $i++)
+                              @for ($j = 0; $j < 60; $j += 15)
+                                  {{-- Format jam --}}
+                                  @php
+                                      $formattedHour = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                      $formattedMinute = str_pad($j, 2, '0', STR_PAD_LEFT);
+                                      $formattedTime = $formattedHour . ':' . $formattedMinute;
+                                  @endphp
+                                  <option value="{{ $formattedTime }}">{{ $formattedTime }}</option>
+                              @endfor
+                          @endfor
+                      </select>
+                  </div>                  
+                  <div class="mb-4 flex justify-center">
+                    <button type="submit" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Tambahkan Jadwal Periksa</button>
+                  </div>
+                </form>
                 </div>
             </div>
       
