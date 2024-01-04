@@ -1,19 +1,7 @@
-1. gunakan database yang ada diluar laravel bernama bk_poliklinik.sql (tidak memakai migrasi)
-2. install composer dan 'composer update' terminal
-3. .env sambungkan ke database
-4. buat database di phpmyadmin karena migrasi di laravel tidak ada
-5. tempel database yang didownload ke database lokal
-6. terminal 'php artisan key:generate'
-7. terminal 'php artisan serve'
-
-login admin
-admin2@gmail.com
-12121212
-
-login pasien
-pasien1@gmail.con
-12121212
-
-logindokter
-doktersemarang@gmail.com
-12121212
+1. git clone dari repository
+2. buka terminal pada folder yang diclone
+3. pada terminal lakukan 'composer update'
+4. file .env.example copy dan ganti namanya jadi .env
+5. pada terminal lakukan 'php artisan key:generate'
+6. pada terminal lakukan 'php artisan db:seed role'
+7. jalankan dengan perintah 'php artisan serve' pada terminal
