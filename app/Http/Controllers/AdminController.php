@@ -7,6 +7,7 @@ use App\Models\Poli;
 use App\Models\Pasien;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -82,7 +83,10 @@ class AdminController extends Controller
 
     public function pasien()
     {
-        $pasiens = Pasien::all();
+        $pasiens = Pasien::orderBy(DB::raw('SUBSTRING_INDEX(no_rm, "-", -1)'), 'ASC')
+                        ->orderBy('no_rm', 'ASC')
+                        ->get();
+        
         return view('admin.pasien', compact('pasiens'));
     }
 
