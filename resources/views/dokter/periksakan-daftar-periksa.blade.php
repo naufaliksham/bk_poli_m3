@@ -86,12 +86,8 @@
                     </table>
                   </div>
                   <div class="overflow-x-auto">
-                    <form action="{{ route('admin-storePasien') }}" method="POST" class="bg-white p-8 rounded-lg shadow-md">
+                    <form action="{{ route('dokter-simpan-Periksakan-Daftar-Periksa', ['id' => $pasienIni->id]) }}" method="POST" class="bg-white p-8 rounded-lg shadow-md">
                       @csrf
-                      <div class="mb-4">
-                        <label for="tanggal_periksa" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Tanggal Periksa:</label>
-                        <input type="date" name="tanggal_periksa" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;" value="{{ now()->format('Y-m-d') }}" readonly>
-                      </div>
                       <div class="mb-4">
                           <label for="catatan" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Catatan:</label>
                           <input type="text" name="catatan" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
@@ -102,13 +98,100 @@
                       </div>
                       <div class="mb-4">
                         <label for="obat" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Obat:</label>
-                        <select name="obat[]" multiple class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
-                          <!-- Loop through your list of obat from the database and create options -->
-                          @foreach($daftar_obat as $obat)
-                              <option value="{{ $obat->id }}">{{ $obat->nama_obat }}</option>
-                          @endforeach
-                        </select>
+                        <div id="obatContainer">
+                            <select id="obatSelect" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
+                                <!-- Loop through your list of obat from the database and create options -->
+                                <option value="" disabled selected>~~ Pilih Obat ~~</option>
+                                @foreach($daftar_obat as $obat)
+                                    <option value="{{ $obat->id }}">{{ $obat->nama_obat }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                       </div>
+
+                      <div id="obatInputs" class="mb-4">
+                          <!-- Input jumlah dan nama obat untuk setiap obat akan ditambahkan secara dinamis di sini oleh JavaScript -->
+                      </div>
+                          
+                      <!-- Script JavaScript -->
+                      <script>
+                        document.getElementById('obatSelect').addEventListener('change', function() {
+    // Mendapatkan elemen select dan jumlah obat yang dipilih
+    var select = document.getElementById('obatSelect');
+    var selectedObat = select.options[select.selectedIndex].text;
+
+    // Mendapatkan id_obat
+    var id_obat = select.value;
+
+    // Mendapatkan harga_obat (gantilah ini dengan cara mendapatkan harga yang sesuai dari data obat)
+    var harga_obat = getHargaById(id_obat); // Fungsi getHargaById perlu Anda buat
+
+    // Mengecek apakah input jumlah untuk obat tersebut sudah ada atau belum
+    if (!document.querySelector('input[name="jumlah_obat[' + selectedObat + ']"]')) {
+        // Menambahkan div untuk menampilkan nama obat
+        var obatInputs = document.getElementById('obatInputs');
+        var obatDiv = document.createElement('div');
+        var boldText = document.createElement('strong');
+        boldText.innerText = selectedObat;
+        obatDiv.appendChild(document.createTextNode('Nama Obat = '));
+        obatDiv.appendChild(boldText);
+        obatDiv.style.marginBottom = '0.5rem';
+        obatDiv.style.marginLeft = '0.5rem';
+
+        // Hidden input id_obat
+        var hiddenInputIdObat = document.createElement('input');
+        hiddenInputIdObat.type = 'hidden';
+        hiddenInputIdObat.value = id_obat;
+        hiddenInputIdObat.name = 'id_obat[]';
+
+        // Hidden input harga_obat
+        var hiddenInputHargaObat = document.createElement('input');
+        hiddenInputHargaObat.type = 'hidden';
+        hiddenInputHargaObat.value = harga_obat;
+        hiddenInputHargaObat.name = 'harga_obat[]';
+
+        // Menambahkan tombol "Batal" untuk membatalkan pemilihan obat
+        var batalButton = document.createElement('button');
+        batalButton.type = 'button';
+        batalButton.innerText = 'Hapus ' + selectedObat;
+        batalButton.classList.add('btn', 'btn-danger', 'shadow-soft-2xl', 'rounded-lg', 'bg-dark', 'stroke-0', 'text-center', 'p-1');
+        batalButton.style.backgroundImage = 'linear-gradient(to bottom right, #ef0488, #8624c2)';
+        batalButton.style.color = 'white';
+        batalButton.addEventListener('click', function() {
+            obatInputs.removeChild(obatDiv);
+            resetObatSelect();
+        });
+
+        // Menambahkan nama obat, input jumlah, dan tombol "Batal" ke dalam div
+        obatDiv.appendChild(document.createElement('br'));
+        obatDiv.appendChild(hiddenInputIdObat);
+        obatDiv.appendChild(hiddenInputHargaObat);
+        obatDiv.appendChild(batalButton);
+        obatInputs.appendChild(obatDiv);
+
+        // Mengganti teks pada elemen select
+        resetObatSelect();
+    }
+});
+
+// Fungsi untuk mendapatkan harga obat berdasarkan ID (sesuaikan dengan struktur data Anda)
+function getHargaById(id_obat) {
+    // Gantilah ini dengan cara mendapatkan harga berdasarkan ID dari data obat
+    var obatData = <?php echo json_encode($daftar_obat); ?>;
+    var obat = obatData.find(function(item) {
+        return item.id == id_obat;
+    });
+
+    return obat ? obat.harga : 0; // Jika obat ditemukan, kembalikan harga; jika tidak, kembalikan 0
+}
+
+
+                        function resetObatSelect() {
+                            // Mengganti teks pada elemen select menjadi "~~ pilih obat ~~"
+                            var select = document.getElementById('obatSelect');
+                            select.selectedIndex = 0; // Mengatur kembali ke indeks pertama
+                        }
+                      </script>
                       <div class="mb-4 flex justify-center">
                           <button type="submit" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Tambah pasien</button>
                       </div>

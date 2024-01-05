@@ -61,6 +61,11 @@
                     <center>{{ session('success') }}</center>
                   </div>
                 @endif
+                @if(session('error'))
+                    <div style="color:red">
+                      <center>{{ session('error') }}</center>
+                    </div>
+                @endif
                 <div class="flex-auto p-6 px-0 pb-2">
                   <div class="overflow-x-auto">
                     <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">

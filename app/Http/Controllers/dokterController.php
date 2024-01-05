@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\DaftarPoli;
+use App\Models\DetailPeriksa;
 use App\Models\Dokter;
 use App\Models\JadwalPeriksa;
+use App\Models\Obat;
+use App\Models\Periksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class DokterController extends Controller
@@ -178,15 +182,72 @@ class DokterController extends Controller
 
     public function daftarPeriksa()
     {
-        $daftar_periksa = DaftarPoli::orderBy('id_jadwal')->orderBy('no_antrian')->get();
-        // dd($daftar_periksa);
+        // Ambil hanya data yang keluhannya belum 'selesai'
+        $daftar_periksa = DaftarPoli::where('keluhan', '!=', 'selesai')
+                                    ->orderBy('id_jadwal')
+                                    ->orderBy('no_antrian')
+                                    ->get();
         return view('dokter.daftar-periksa', compact('daftar_periksa'));
     }
 
     public function periksakanDaftarPeriksa($id)
     {
         $pasienIni = DaftarPoli::findOrFail($id);
-        // dd($pasien);
-        return view('dokter.periksakan-daftar-periksa', compact('pasienIni'));
+        $daftar_obat = Obat::all();
+        return view('dokter.periksakan-daftar-periksa', compact('pasienIni','daftar_obat'));
+    }
+
+    public function simpanPeriksakanDaftarPeriksa(Request $request, $id)
+    {
+        // Hitung total harga obat
+        $totalHargaObat = array_sum($request->input('harga_obat'));
+        // Hitung total biaya periksa (biaya periksa + total harga obat)
+        $totalBiayaPeriksa = $request->input('biaya_periksa') + $totalHargaObat;
+
+        // Simpan data periksa ke dalam tabel periksa
+        $periksa = Periksa::create([
+            'id_daftar_poli' => $id,
+            'tgl_periksa' => now(),
+            'catatan' => $request->input('catatan'),
+            'biaya_periksa' => $totalBiayaPeriksa,
+        ]);
+        DaftarPoli::where('id', $id)->update(['keluhan' => 'selesai']);
+
+        // Simpan data obat ke dalam tabel detail_periksa
+        foreach ($request->input('id_obat') as $id_obat) {
+            DetailPeriksa::create([
+                'id_periksa' => $periksa->id,
+                'id_obat' => $id_obat,
+            ]);
+        }
+
+        return redirect()->route('dokter-daftar-periksa')->with('success', 'Data periksa berhasil disimpan!');
+    }
+
+
+    public function riwayatPeriksa()
+    {
+        $periksa = Periksa::all();
+        return view('dokter.riwayat-periksa', compact('periksa'));
+    }
+
+    public function detailRiwayatPeriksa($id)
+    {
+        $detail_periksa = DetailPeriksa::findOrFail($id);
+        $id_obat = DetailPeriksa::with('obat')->where('id_periksa', $id)->get();
+        return view('dokter.detail_riwayat-periksa', compact('detail_periksa','id_obat'));
+    }
+
+    public function destroyRiwayatPeriksa($id)
+    {
+        $riwayat_periksa = Periksa::find($id);
+
+        if ($riwayat_periksa) {
+            DetailPeriksa::where('id_periksa', $id)->delete();
+            $riwayat_periksa->delete();
+            return redirect()->route('dokter-riwayat-periksa')->with('success', 'Riwayat periksa berhasil dihapus!');
+        }
+
+        return redirect()->back()->with('error', 'Riwayat periksa tidak ditemukan!');
     }
 }

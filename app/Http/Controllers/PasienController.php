@@ -149,11 +149,6 @@ class PasienController extends Controller
         // Kirim data ke view
         return view('pasien.pilihjadwal', compact('jadwal'));
     }
-    
-    
-    
-    
-    
 
     public function submitDaftarPoli(Request $request)
     {

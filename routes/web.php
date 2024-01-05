@@ -92,5 +92,8 @@ Route::put('/dokter/update-jadwal-periksa/{id}', [DokterController::class, 'upda
 Route::delete('/dokter/destroy-jadwal-periksa/{id}', [DokterController::class, 'destroyJadwalPeriksa'])->name('dokter-destroy-jadwal-periksa');
 Route::get('/dokter/daftar-periksa', [DokterController::class, 'daftarPeriksa'])->name('dokter-daftar-periksa');
 Route::get('/dokter/periksakan-daftar-periksa/{id}', [DokterController::class, 'periksakanDaftarPeriksa'])->name('dokter-periksakan-daftar-periksa');
-Route::delete('/dokter/destroy-daftar-periksa/{id}', [DokterController::class, 'destroyDaftarPeriksa'])->name('dokter-destroy-daftar-periksa');
+Route::post('/dokter/simpan-periksakan-daftar-periksa/{id}', [DokterController::class, 'simpanPeriksakanDaftarPeriksa'])->name('dokter-simpan-Periksakan-Daftar-Periksa');
+Route::get('/dokter/riwayat-periksa', [DokterController::class, 'riwayatPeriksa'])->name('dokter-riwayat-periksa');
+Route::get('/dokter/detail-riwayat-periksa/{id}', [DokterController::class, 'detailRiwayatPeriksa'])->name('dokter-detail-riwayat-periksa');
+Route::delete('/dokter/destroy-riwayat-periksa/{id}', [DokterController::class, 'destroyRiwayatPeriksa'])->name('dokter-destroy-riwayat-periksa');
 

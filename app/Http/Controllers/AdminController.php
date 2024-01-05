@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarPoli;
+use App\Models\DetailPeriksa;
 use App\Models\Obat;
 use App\Models\Poli;
 use App\Models\Pasien;
 use App\Models\Dokter;
+use App\Models\JadwalPeriksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,7 +75,10 @@ class AdminController extends Controller
             return redirect()->route('admin-dokter')
             ->with('success', 'Dokter '.$dokter->nama.' sudah dihapus sebelumnya!');
         }
-        
+        $hasRelatedJadwalPeriksa = JadwalPeriksa::where('id_dokter', $dokter->id)->exists();
+        if ($hasRelatedJadwalPeriksa) {
+            return redirect()->route('admin-dokter')->with('error', 'Tidak dapat menghapus dokter karena ada jadwal periksa terkait.');
+        }
         $dokter->delete();
 
         return redirect()->route('admin-dokter')
@@ -144,7 +150,10 @@ class AdminController extends Controller
             return redirect()->route('admin-pasien')
             ->with('success', 'Pasien '.$pasien->nama.' sudah dihapus sebelumnya!');
         }
-
+        $hasRelatedPasien = DaftarPoli::where('id_pasien', $pasien->id)->exists();
+        if ($hasRelatedPasien) {
+            return redirect()->route('admin-pasien')->with('error', 'Tidak dapat menghapus pasien karena ada daftar poli terkait.');
+        }
         $pasien->delete();
 
         return redirect()->route('admin-pasien')
@@ -200,6 +209,11 @@ class AdminController extends Controller
         if ($poli == null) {
             return redirect()->route('admin-poli')
             ->with('success', 'Poli sudah dihapus sebelumnya!');
+        }
+
+        $hasRelatedDokter = Dokter::where('id_poli', $poli->id)->exists();
+        if ($hasRelatedDokter) {
+            return redirect()->route('admin-poli')->with('error', 'Tidak dapat menghapus Poli karena ada Dokter terkait.');
         }
 
         $poli->delete();
@@ -260,7 +274,10 @@ class AdminController extends Controller
             return redirect()->route('admin-obat')
             ->with('success', 'Obat sudah dihapus sebelumnya!');
         }
-
+        $hasRelatedObat = DetailPeriksa::where('id_obat', $obat->id)->exists();
+        if ($hasRelatedObat) {
+            return redirect()->route('admin-obat')->with('error', 'Tidak dapat menghapus Obat karena ada detail periksa terkait.');
+        }
         $obat->delete();
 
         return redirect()->route('admin-obat')

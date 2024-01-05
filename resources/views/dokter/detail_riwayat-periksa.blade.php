@@ -43,70 +43,46 @@
         {{-- Table --}}
         <div class="flex flex-wrap my-6 -mx-3">
           
-            <!-- Daftar poli -->
+            <!-- Daftar Jadwal Periksa -->
             <div class="w-full max-w-full px-3 mt-0 mb-6">
               <div class="border-black/12.5 shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
                 <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
                   <div class="flex flex-wrap mt-0 -mx-3">
                     <div class="flex-none w-7/12 max-w-full px-3 mt-0 lg:w-1/2 lg:flex-none">
-                      <h6>Daftar Poliklinik</h6>
-                    </div>
-                    <div class="flex-none w-5/12 max-w-full px-3 mt-0 text-right lg:w-1/2 lg:flex-none">
-                      <a href="{{ route('admin-createPoli') }}" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Tambah Poliklinik</a>
+                      <h6>Detail Riwayat Periksa Pasien</h6>
                     </div>
                   </div>
                 </div>
-                @if(session('success'))
-                  <div style="color:blue">
-                    <center>{{ session('success') }}</center>
-                  </div>
-                @endif
-                @if(session('error'))
-                    <div style="color:red">
-                      <center>{{ session('error') }}</center>
-                    </div>
-                @endif
                 <div class="flex-auto p-6 px-0 pb-2">
                   <div class="overflow-x-auto">
                     <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
                       <thead class="align-bottom">
                         <tr>
-                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">No.</th>
-                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Nama poli</th>
-                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Deskripsi</th>
-                          <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Aksi</th>
+                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Nama Pasien</th>
+                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Tanggal Periksa</th>
+                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Catatan</th>
+                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Biaya Periksa</th>
+                          <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Obat</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($polis as $key => $poli)
                           <tr>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                               <div class="flex px-2 py-1">
                                 <div class="flex flex-col justify-center">
-                                  <h6 class="px-6 py-3 font-bold text-center">{{ $key + 1 }}</h6>
+                                  <center><h6 class="mb-0 text-sm leading-normal">{{ $detail_periksa->periksa->daftarPoli->pasien->nama }}</h6></center>
                                 </div>
                               </div>
                             </td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $detail_periksa->periksa->tgl_periksa }}</td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $detail_periksa->periksa->catatan }}</td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $detail_periksa->periksa->biaya_periksa }}</td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
-                              <div class="flex px-2 py-1">
-                                <div class="flex flex-col justify-center">
-                                  <center><h6 class="mb-0 text-sm leading-normal">{{ $poli->nama_poli }}</h6></center>
-                                </div>
-                              </div>
+                              @foreach ($id_obat as $ib)
+                                {{$ib->obat->nama_obat}} | Rp{{$ib->obat->harga}}<br>
+                              @endforeach
                             </td>
-                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $poli->keterangan }}</td>
-                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
-                              <div class="flex justify-center items-center">
-                                <a href="{{ route('admin-editPoli', $poli->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Edit</a>
-                                <form action="{{ route('admin-destroyPoli', $poli->id) }}" method="POST" style="display: inline;">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-danger py-1 px-4" style="color:#7928ca" onclick="return confirm('Apakah Anda yakin ingin menghapus poli ini?')">Hapus</button>
-                                </form>
-                              </div>
-                            </td>                          
                           </tr>
-                        @endforeach
                       </tbody>
                     </table>
                   </div>

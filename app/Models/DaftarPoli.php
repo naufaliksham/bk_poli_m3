@@ -13,6 +13,7 @@ class DaftarPoli extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'id_pasien',
         'id_jadwal',
         'keluhan',

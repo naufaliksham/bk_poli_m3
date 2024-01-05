@@ -67,7 +67,7 @@
                     <div class="mb-4">
                       <label for="no_rm" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">No.Rm:</label>
                       <div class="relative">
-                          <input type="text" name="no_rm" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;" placeholder="Nomor Rekam Medis akan diisi secara otomatis oleh sistem!" readonly>
+                        <p class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">Nomor Rekam Medis akan diisi secara otomatis oleh sistem setelah pasien melakukan registrasi akun!</p>
                       </div>
                     </div>                  
                     <div class="mb-4 flex justify-center">

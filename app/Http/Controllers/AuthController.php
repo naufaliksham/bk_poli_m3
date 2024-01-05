@@ -112,10 +112,14 @@ class AuthController extends Controller
                     'idRole' => $request->input('role'),
                 ]);
 
-                // Membuat objek Pasien dan memberikan nomor rekam medis
-                $pasien = Pasien::create([
-                    'no_rm' => null, // Nomor rekam medis akan diisi oleh fungsi creating
-                ]);
+                // membuat nomor rekam medis
+                $tahunBulan = date('Ym');
+                $latestNumber = Pasien::where('no_rm', 'like', $tahunBulan . '%')->max('no_rm');
+                $nomorUrut = $latestNumber ? intval(substr($latestNumber, -3)) + 1 : 1;
+                $no_rm = $tahunBulan . '-' . str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
+                // memasukan nomor rekam medis
+                $pasien->no_rm = $no_rm;
+                $pasien->save();
     
                 // Redirect ke halaman setelah registrasi
                 return redirect('/formlogin')->with('success', 'Berhasil mendaftar, silakan coba login!');

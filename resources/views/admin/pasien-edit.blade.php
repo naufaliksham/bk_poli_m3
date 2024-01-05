@@ -69,7 +69,7 @@
                     <div class="mb-4">
                         <label for="no_rm" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">No.Rm:</label>
                         <div class="relative">
-                          <p class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">{{$pasien->no_rm}} (Tidak dapat diubah)</p>
+                          <p class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">Nomor Rekam Medis akan diisi secara otomatis oleh sistem setelah pasien melakukan registrasi akun!</p>
                         </div>
                     <div class="mb-4 flex justify-center">
                         <button type="submit" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Simpan Perubahan</button>
