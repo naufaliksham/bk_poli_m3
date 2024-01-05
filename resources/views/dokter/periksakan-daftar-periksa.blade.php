@@ -92,7 +92,7 @@
                           <label for="catatan" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Catatan:</label>
                           <input type="text" name="catatan" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;">
                       </div>
-                      <div class="mb-4">
+                      <div class="mb-4" hidden>
                           <label for="biaya_periksa" class="block text-sm font-medium text-gray-700 mb-1" style="margin: 0.5rem;">Biaya Periksa:</label>
                           <input type="text" name="biaya_periksa" class="w-full p-2 border rounded-md" style="width: calc(100% - 1rem); padding: 0.5rem; border-radius: 0.375rem; margin: 0.5rem;" readonly value="150000">
                       </div>
