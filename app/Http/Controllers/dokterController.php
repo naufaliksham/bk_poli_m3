@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarPoli;
 use App\Models\Dokter;
 use App\Models\JadwalPeriksa;
 use Illuminate\Http\Request;
@@ -14,6 +15,9 @@ class DokterController extends Controller
     {
         return view('dokter.dashboard');
     }
+
+
+    // JADWAL PERIKSA
 
     public function jadwalPeriksa()
     {
@@ -168,5 +172,21 @@ class DokterController extends Controller
         }
 
         return redirect()->back()->with('error', 'Jadwal periksa tidak ditemukan!');
+    }
+
+    // DAFTAR PERIKSA
+
+    public function daftarPeriksa()
+    {
+        $daftar_periksa = DaftarPoli::orderBy('id_jadwal')->orderBy('no_antrian')->get();
+        // dd($daftar_periksa);
+        return view('dokter.daftar-periksa', compact('daftar_periksa'));
+    }
+
+    public function periksakanDaftarPeriksa($id)
+    {
+        $pasienIni = DaftarPoli::findOrFail($id);
+        // dd($pasien);
+        return view('dokter.periksakan-daftar-periksa', compact('pasienIni'));
     }
 }

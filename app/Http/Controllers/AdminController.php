@@ -104,6 +104,14 @@ class AdminController extends Controller
             'no_hp' => 'required|numeric',
         ]);
 
+        // Cek apakah admin sedang membuat pasien atau bukan
+        $isAdminCreatingPasien = $request->user()->idRole == 1; // Sesuaikan dengan logika role admin pada aplikasi Anda
+
+        // Jika admin sedang membuat pasien, unset no_rm agar tidak diisi
+        if ($isAdminCreatingPasien) {
+            unset($request['no_rm']);
+        }
+
         Pasien::create($request->all());
 
         return redirect()->route('admin-pasien')

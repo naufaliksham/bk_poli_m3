@@ -24,7 +24,7 @@ class Pasien extends Model
         parent::boot();
     
         static::creating(function ($pasien) {
-            
+
             // Cek apakah nomor KTP sudah terdaftar
             $ktpExists = static::where('no_ktp', $pasien->no_ktp)->exists();
             if ($ktpExists) {
@@ -35,14 +35,20 @@ class Pasien extends Model
             if (!$pasien->no_rm) {
                 $tahunBulan = date('Ym');
                 
-                // Cek angka terbesar dari nomor rekam medis
-                $latestNumber = static::where('no_rm', 'like', $tahunBulan . '%')
-                    ->max('no_rm');
-                
-                // Jika belum ada nomor rekam medis, set ke 1
-                $nomorUrut = $latestNumber ? intval(substr($latestNumber, -3)) + 1 : 1;
-                
-                $pasien->no_rm = $tahunBulan . '-' . str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
+                // Cek apakah sedang ada role admin yang membuat pasien
+                $isPasien = \request()->user()->idRole == 2; // Sesuaikan dengan logika role admin pada aplikasi Anda
+
+                // Jika bukan admin yang membuat, set nomor rekam medis
+                if ($isPasien) {
+                    // Cek angka terbesar dari nomor rekam medis
+                    $latestNumber = static::where('no_rm', 'like', $tahunBulan . '%')
+                        ->max('no_rm');
+
+                    // Jika belum ada nomor rekam medis, set ke 1
+                    $nomorUrut = $latestNumber ? intval(substr($latestNumber, -3)) + 1 : 1;
+
+                    $pasien->no_rm = $tahunBulan . '-' . str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
+                }
             }
         });
     }

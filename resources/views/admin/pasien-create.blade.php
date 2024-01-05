@@ -73,7 +73,7 @@
                     <div class="mb-4 flex justify-center">
                         <button type="submit" class="btn btn-success shadow-soft-2xl rounded-lg bg-dark stroke-0 text-center xl:p-2.5" style="background-image: linear-gradient(to bottom right, #ef0488, #8624c2); color:white;">Tambah pasien</button>
                     </div>
-                </form>
+                  </form>
                 
                 
                 </div>

@@ -111,11 +111,16 @@ class AuthController extends Controller
                     'password' => Hash::make($request->input('password')),
                     'idRole' => $request->input('role'),
                 ]);
+
+                // Membuat objek Pasien dan memberikan nomor rekam medis
+                $pasien = Pasien::create([
+                    'no_rm' => null, // Nomor rekam medis akan diisi oleh fungsi creating
+                ]);
     
                 // Redirect ke halaman setelah registrasi
                 return redirect('/formlogin')->with('success', 'Berhasil mendaftar, silakan coba login!');
             }
-        } 
+        }
 
         // Jika role admin
         if ($request->input('role') == 1) {

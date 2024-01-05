@@ -49,7 +49,7 @@ class PasienController extends Controller
 
         if ($pasien) {
             // Ambil data DaftarPoli berdasarkan id_pasien
-            $daftarPolis = DaftarPoli::where('id_pasien', $pasien->id)->orderBy('no_antrian', 'desc')->first();
+            $daftarPolis = DaftarPoli::where('id_pasien', $pasien->id)->orderBy('id', 'desc')->first();
             // dd($daftarPolis);
             // Kirim data ke view
             return view('pasien.poliklinik', compact('jadwalPeriksas', 'daftarPolis'));

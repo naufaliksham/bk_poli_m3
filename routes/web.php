@@ -90,4 +90,7 @@ Route::post('/dokter/create-jadwal-periksa', [DokterController::class, 'createJa
 Route::get('/dokter/edit-jadwal-periksa/{id}', [DokterController::class, 'editJadwalPeriksa'])->name('dokter-edit-jadwal-periksa');
 Route::put('/dokter/update-jadwal-periksa/{id}', [DokterController::class, 'updateJadwalPeriksa'])->name('dokter-update-jadwal-periksa');
 Route::delete('/dokter/destroy-jadwal-periksa/{id}', [DokterController::class, 'destroyJadwalPeriksa'])->name('dokter-destroy-jadwal-periksa');
+Route::get('/dokter/daftar-periksa', [DokterController::class, 'daftarPeriksa'])->name('dokter-daftar-periksa');
+Route::get('/dokter/periksakan-daftar-periksa/{id}', [DokterController::class, 'periksakanDaftarPeriksa'])->name('dokter-periksakan-daftar-periksa');
+Route::delete('/dokter/destroy-daftar-periksa/{id}', [DokterController::class, 'destroyDaftarPeriksa'])->name('dokter-destroy-daftar-periksa');
 
