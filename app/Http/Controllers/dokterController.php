@@ -192,11 +192,16 @@ public function statusJadwalPeriksa($id)
     public function destroyJadwalPeriksa($id)
     {
         $jadwalPeriksa = JadwalPeriksa::find($id);
+        $hasRelatedDaftarPoli = DaftarPoli::where('id_jadwal', $jadwalPeriksa->id)->exists();
+        if ($hasRelatedDaftarPoli) {
+            return redirect()->back()->with('error', 'Tidak dapat menghapus jadwal periksa karena ada daftar poli terkait.');
+        }
 
         if ($jadwalPeriksa) {
             $jadwalPeriksa->delete();
             return redirect()->route('dokter-jadwal-periksa')->with('success', 'Jadwal periksa berhasil dihapus!');
         }
+
 
         return redirect()->back()->with('error', 'Jadwal periksa tidak ditemukan!');
     }
@@ -211,6 +216,20 @@ public function statusJadwalPeriksa($id)
                                     ->orderBy('no_antrian')
                                     ->get();
         return view('dokter.daftar-periksa', compact('daftar_periksa'));
+    }
+
+    public function destroyDaftarPoli($id)
+    {
+        $daftarPoli = DaftarPoli::find($id);
+
+        if (!$daftarPoli) {
+            return redirect()->route('dokter-daftar-periksa')->with('error', 'Data daftar poli tidak ditemukan.');
+        }
+
+        $daftarPoli->periksa()->delete();
+        $daftarPoli->delete();
+
+        return redirect()->route('dokter-daftar-periksa')->with('success', 'Data daftar poli berhasil dihapus.');
     }
 
     public function periksakanDaftarPeriksa($id)

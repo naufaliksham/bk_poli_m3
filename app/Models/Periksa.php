@@ -24,5 +24,10 @@ class Periksa extends Model
         return $this->belongsTo(DaftarPoli::class, 'id_daftar_poli');
     }
 
+    public function detailPeriksa()
+    {
+        return $this->belongsTo(DaftarPoli::class, 'id_periksa');
+    }
+
     public $timestamps = false; // Nonaktifkan timestamp
 }

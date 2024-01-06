@@ -94,11 +94,11 @@
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                               <div class="flex justify-center items-center">
                                 <a href="{{ route('dokter-periksakan-daftar-periksa', $dp->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Periksa Pasien</a>
-                                {{-- <form action="{{ route('dokter-destroy-daftar-periksa', $dp->id) }}" method="POST" style="display: inline;">
+                                <form method="POST" action="{{ route('dokter-destroy-daftar-poli', ['id' => $dp->id]) }}" style="display: inline;">
                                   @csrf
                                   @method('DELETE')
-                                  <button type="submit" class="btn btn-danger py-1 px-4" style="color:#7928ca" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal periksa ini?')">Hapus</button>
-                                </form> --}}
+                                  <button type="submit" class="btn btn-danger" style="color: red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                              </form>                              
                               </div>
                             </td>                          
                           </tr>

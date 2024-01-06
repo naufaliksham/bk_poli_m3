@@ -85,6 +85,7 @@ Route::post('/submit-daftar-poli', [PasienController::class, 'submitDaftarPoli']
 // dashboard
 Route::get('/dokter', [DokterController::class, 'dashboard'])->name('dokter-dashboard');
 Route::get('/dokter/jadwal-periksa', [DokterController::class, 'jadwalPeriksa'])->name('dokter-jadwal-periksa');
+Route::delete('/dokter/destroy-daftar-poli/{id}', [DokterController::class, 'destroyDaftarPoli'])->name('dokter-destroy-daftar-poli');
 Route::post('/dokter/status-jadwal-periksa/{id}', [DokterController::class, 'statusJadwalPeriksa'])->name('dokter-status-jadwal-periksa');
 Route::get('/dokter/tambah-jadwal-periksa', [DokterController::class, 'tambahJadwalPeriksa'])->name('dokter-tambah-jadwal-periksa');
 Route::post('/dokter/create-jadwal-periksa', [DokterController::class, 'createJadwalPeriksa'])->name('dokter-create-jadwal-periksa');

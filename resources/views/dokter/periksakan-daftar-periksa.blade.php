@@ -116,63 +116,63 @@
                       <!-- Script JavaScript -->
                       <script>
                         document.getElementById('obatSelect').addEventListener('change', function() {
-    // Mendapatkan elemen select dan jumlah obat yang dipilih
-    var select = document.getElementById('obatSelect');
-    var selectedObat = select.options[select.selectedIndex].text;
+                        // Mendapatkan elemen select dan jumlah obat yang dipilih
+                        var select = document.getElementById('obatSelect');
+                        var selectedObat = select.options[select.selectedIndex].text;
 
-    // Mendapatkan id_obat
-    var id_obat = select.value;
+                        // Mendapatkan id_obat
+                        var id_obat = select.value;
 
-    // Mendapatkan harga_obat (gantilah ini dengan cara mendapatkan harga yang sesuai dari data obat)
-    var harga_obat = getHargaById(id_obat); // Fungsi getHargaById perlu Anda buat
+                        // Mendapatkan harga_obat (gantilah ini dengan cara mendapatkan harga yang sesuai dari data obat)
+                        var harga_obat = getHargaById(id_obat); // Fungsi getHargaById perlu Anda buat
 
-    // Mengecek apakah input jumlah untuk obat tersebut sudah ada atau belum
-    if (!document.querySelector('input[name="jumlah_obat[' + selectedObat + ']"]')) {
-        // Menambahkan div untuk menampilkan nama obat
-        var obatInputs = document.getElementById('obatInputs');
-        var obatDiv = document.createElement('div');
-        var boldText = document.createElement('strong');
-        boldText.innerText = selectedObat;
-        obatDiv.appendChild(document.createTextNode('Nama Obat = '));
-        obatDiv.appendChild(boldText);
-        obatDiv.style.marginBottom = '0.5rem';
-        obatDiv.style.marginLeft = '0.5rem';
+                        // Mengecek apakah input jumlah untuk obat tersebut sudah ada atau belum
+                        if (!document.querySelector('input[name="jumlah_obat[' + selectedObat + ']"]')) {
+                            // Menambahkan div untuk menampilkan nama obat
+                            var obatInputs = document.getElementById('obatInputs');
+                            var obatDiv = document.createElement('div');
+                            var boldText = document.createElement('strong');
+                            boldText.innerText = selectedObat;
+                            obatDiv.appendChild(document.createTextNode('Nama Obat = '));
+                            obatDiv.appendChild(boldText);
+                            obatDiv.style.marginBottom = '0.5rem';
+                            obatDiv.style.marginLeft = '0.5rem';
 
-        // Hidden input id_obat
-        var hiddenInputIdObat = document.createElement('input');
-        hiddenInputIdObat.type = 'hidden';
-        hiddenInputIdObat.value = id_obat;
-        hiddenInputIdObat.name = 'id_obat[]';
+                            // Hidden input id_obat
+                            var hiddenInputIdObat = document.createElement('input');
+                            hiddenInputIdObat.type = 'hidden';
+                            hiddenInputIdObat.value = id_obat;
+                            hiddenInputIdObat.name = 'id_obat[]';
 
-        // Hidden input harga_obat
-        var hiddenInputHargaObat = document.createElement('input');
-        hiddenInputHargaObat.type = 'hidden';
-        hiddenInputHargaObat.value = harga_obat;
-        hiddenInputHargaObat.name = 'harga_obat[]';
+                            // Hidden input harga_obat
+                            var hiddenInputHargaObat = document.createElement('input');
+                            hiddenInputHargaObat.type = 'hidden';
+                            hiddenInputHargaObat.value = harga_obat;
+                            hiddenInputHargaObat.name = 'harga_obat[]';
 
-        // Menambahkan tombol "Batal" untuk membatalkan pemilihan obat
-        var batalButton = document.createElement('button');
-        batalButton.type = 'button';
-        batalButton.innerText = 'Hapus ' + selectedObat;
-        batalButton.classList.add('btn', 'btn-danger', 'shadow-soft-2xl', 'rounded-lg', 'bg-dark', 'stroke-0', 'text-center', 'p-1');
-        batalButton.style.backgroundImage = 'linear-gradient(to bottom right, #ef0488, #8624c2)';
-        batalButton.style.color = 'white';
-        batalButton.addEventListener('click', function() {
-            obatInputs.removeChild(obatDiv);
-            resetObatSelect();
-        });
+                            // Menambahkan tombol "Batal" untuk membatalkan pemilihan obat
+                            var batalButton = document.createElement('button');
+                            batalButton.type = 'button';
+                            batalButton.innerText = 'Hapus ' + selectedObat;
+                            batalButton.classList.add('btn', 'btn-danger', 'shadow-soft-2xl', 'rounded-lg', 'bg-dark', 'stroke-0', 'text-center', 'p-1');
+                            batalButton.style.backgroundImage = 'linear-gradient(to bottom right, #ef0488, #8624c2)';
+                            batalButton.style.color = 'white';
+                            batalButton.addEventListener('click', function() {
+                                obatInputs.removeChild(obatDiv);
+                                resetObatSelect();
+                            });
 
-        // Menambahkan nama obat, input jumlah, dan tombol "Batal" ke dalam div
-        obatDiv.appendChild(document.createElement('br'));
-        obatDiv.appendChild(hiddenInputIdObat);
-        obatDiv.appendChild(hiddenInputHargaObat);
-        obatDiv.appendChild(batalButton);
-        obatInputs.appendChild(obatDiv);
+                            // Menambahkan nama obat, input jumlah, dan tombol "Batal" ke dalam div
+                            obatDiv.appendChild(document.createElement('br'));
+                            obatDiv.appendChild(hiddenInputIdObat);
+                            obatDiv.appendChild(hiddenInputHargaObat);
+                            obatDiv.appendChild(batalButton);
+                            obatInputs.appendChild(obatDiv);
 
-        // Mengganti teks pada elemen select
-        resetObatSelect();
-    }
-});
+                            // Mengganti teks pada elemen select
+                            resetObatSelect();
+                        }
+                    });
 
 // Fungsi untuk mendapatkan harga obat berdasarkan ID (sesuaikan dengan struktur data Anda)
 function getHargaById(id_obat) {
