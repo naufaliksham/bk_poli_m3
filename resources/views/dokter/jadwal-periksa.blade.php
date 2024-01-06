@@ -70,6 +70,7 @@
                           <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Hari</th>
                           <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Jam Mulai</th>
                           <th class="px-6 py-3 pl-2 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Jam Selesai</th>
+                          <th class="px-6 py-3 font-bold tracking-normal text-left uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70"><center>Status</center></th>
                           <th class="px-6 py-3 font-bold tracking-normal text-center uppercase align-middle bg-transparent border-b letter border-b-solid text-xxs whitespace-nowrap border-b-gray-200 text-slate-400 opacity-70">Aksi</th>
                         </tr>
                       </thead>
@@ -92,6 +93,13 @@
                             </td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $jp->jam_mulai }}</td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">{{ $jp->jam_selesai }}</td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                              <center>{{ $jp->aktif }}</center>
+                              <center><form method="POST" action="{{ route('dokter-status-jadwal-periksa', ['id' => $jp->id]) }}" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary mr-2 py-1 px-4" style="color:#7928ca">Ubah Status</button>
+                              </center></form>
+                            </td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                               <div class="flex justify-center items-center">
                                 <a href="{{ route('dokter-edit-jadwal-periksa', $jp->id) }}" class="btn btn-warning mr-2 py-1 px-4" style="color:#b017ab">Edit</a>

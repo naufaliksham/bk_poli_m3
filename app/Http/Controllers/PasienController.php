@@ -21,8 +21,10 @@ class PasienController extends Controller
     public function poliklinik()
     {
         // Ambil semua jadwal periksa
-        $jadwalPeriksas = JadwalPeriksa::all()->sortBy('hari')->sortBy('jam_mulai');
-
+        $jadwalPeriksas = JadwalPeriksa::where('aktif', 'Y')
+                                        ->orderBy('hari')
+                                        ->orderBy('jam_mulai')
+                                        ->get();
         // Inisialisasi array untuk menyimpan nomor urut
         $urutanPerId = [];
 

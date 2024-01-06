@@ -38,6 +38,28 @@ class DokterController extends Controller
 
         return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
     }
+    
+public function statusJadwalPeriksa($id)
+{
+    $jadwalPeriksa = JadwalPeriksa::find($id);
+
+    if (!$jadwalPeriksa) {
+        return redirect()->back()->with('error', 'JadwalPeriksa tidak ditemukan.');
+    }
+
+    if ($jadwalPeriksa->aktif == 'Y') {
+        $jadwalPeriksa->update([
+            'aktif' => 'N',
+        ]);
+    } else if ($jadwalPeriksa->aktif == 'N') {
+        $jadwalPeriksa->update([
+            'aktif' => 'Y',
+        ]);
+    }
+
+    return redirect()->route('dokter-jadwal-periksa')->with('success', 'Status jadwal periksa berhasil diubah.');
+}
+
 
     public function tambahJadwalPeriksa()
     {
@@ -79,6 +101,7 @@ class DokterController extends Controller
                 'hari' => $request->input('hari'),
                 'jam_mulai' => $request->input('jam_mulai'),
                 'jam_selesai' => $request->input('jam_selesai'),
+                'aktif' => 'Y'
             ]);
 
             return redirect()->route('dokter-jadwal-periksa')->with('success', 'Jadwal periksa berhasil ditambahkan!');

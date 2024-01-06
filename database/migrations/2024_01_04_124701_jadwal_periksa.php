@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('hari', ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu']);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
+            $table->string('aktif', 5)->default('N');
 
             // Definisi foreign key
             $table->foreign('id_dokter')->references('id')->on('dokter')->onDelete('RESTRICT')->onUpdate('RESTRICT');
